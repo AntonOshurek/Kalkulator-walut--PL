@@ -33,7 +33,7 @@
 .top-five__currency-block {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: min-content 1fr min-content;
   grid-row-gap: 4px;
   justify-items: center;
   padding: 10px;
@@ -67,9 +67,17 @@
 }
 
 .top-five__price {
+  width: 100%;
+  text-align: center;
   font-size: 38px;
   font-weight: bold;
   color: @standart-white;
+
+  &--error {
+    font-size: 22px;
+    color: tomato;
+    opacity: 0.8;
+  }
 }
 
 .top-five__buy {
