@@ -1,5 +1,5 @@
 .top-five {
-
+  height: min-content;
 }
 
 .top-five__title {
@@ -12,22 +12,54 @@
 
 .top-five__list {
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, min-content);
+  grid-template-rows: repeat(5, 1fr);
   grid-row-gap: 20px;
 }
+
 .top-five__item {
   width: 100%;
-  min-height: 100px;
+
   position: relative;
   display: grid;
-  grid-template-columns: 160px repeat(3, 1fr);
+  grid-template-columns: 180px 140px repeat(3, 1fr);
+
+  grid-template-areas:
+    'i t b s m'
+  ;
 
   color: @standart-white;
 
   background: rgb(0,45,74);
   background: linear-gradient(0deg, rgba(0,45,74,1) 0%, rgba(0,36,61,0.8743872549019608) 100%);
+}
+
+.top-five__name-wrap {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px 10px;
+
+  grid-area: t;
+}
+
+.top-five__name {
+  font-size: 20px;
+  font-weight: normal;
+  text-align: center;
+  text-transform: capitalize;
+  text-align: left;
+}
+
+.top-five__currency-info {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  grid-area: i;
 }
 
 .top-five__currency-block {
@@ -43,16 +75,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(1px);
 }
 
 .top-five__currency-name {
   position: absolute;
   top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   font-weight: bold;
-  font-size: 36px;
+  font-size: 42px;
   text-transform: uppercase;
   color: @standart-white;
 }
@@ -82,12 +115,15 @@
 
 .top-five__buy {
   border-right: 2px dotted 	#808080;
+  border-left: 2px dotted 	#808080;
+  grid-area: b;
 }
 
 .top-five__sell {
   border-right: 2px dotted 	#808080;
+  grid-area: s;
 }
 
 .top-five__average {
-
+  grid-area: m;
 }

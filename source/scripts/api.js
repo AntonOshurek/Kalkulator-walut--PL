@@ -3,7 +3,7 @@ const GET_DATA_SOURCE = 'http://api.nbp.pl/api/exchangerates/tables/b/';
 // http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/
 
 
-const getOneCurrency = (code) => fetch(`http://api.nbp.pl/api/exchangerates/rates/c/${code}/?format=json`, {
+const getOneCurrency = (code, table = 'c') => fetch(`http://api.nbp.pl/api/exchangerates/rates/${table}/${code}/?format=json`, {
     Accept: 'application/json'
   })
   .then((response) => {
