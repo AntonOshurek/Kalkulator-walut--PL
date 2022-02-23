@@ -2,21 +2,84 @@
 
 }
 
+.top-five__title {
+  padding: 20px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 28px;
+  text-transform: capitalize;
+}
+
 .top-five__list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, min-content);
+  grid-row-gap: 20px;
 }
 .top-five__item {
+  width: 100%;
+  min-height: 100px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 160px repeat(3, 1fr);
+
+  color: @standart-white;
+
+  background: rgb(0,45,74);
+  background: linear-gradient(0deg, rgba(0,45,74,1) 0%, rgba(0,36,61,0.8743872549019608) 100%);
 }
+
+.top-five__currency-block {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-row-gap: 4px;
+  justify-items: center;
+  padding: 10px;
+}
+
 .top-five__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
 .top-five__currency-name {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+
+  font-weight: bold;
+  font-size: 36px;
+  text-transform: uppercase;
+  color: @standart-white;
 }
-.top-five__buy {
+
+.top-five__price-title {
+  font-size: 20px;
+  font-weight: normal;
+  text-transform: capitalize;
+  color: #DCDCDC;
+
+  align-self: end;
 }
-.top-five__title {
-}
+
 .top-five__price {
+  font-size: 38px;
+  font-weight: bold;
+  color: @standart-white;
 }
+
+.top-five__buy {
+  border-right: 2px dotted 	#808080;
+}
+
 .top-five__sell {
+  border-right: 2px dotted 	#808080;
 }
+
 .top-five__average {
+
 }
