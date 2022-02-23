@@ -1,5 +1,5 @@
 .top-five {
-
+  height: min-content;
 }
 
 .top-five__title {
@@ -14,15 +14,15 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, min-content);
+  grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 20px;
 }
 .top-five__item {
   width: 100%;
-  min-height: 100px;
+
   position: relative;
   display: grid;
-  grid-template-columns: 160px repeat(3, 1fr);
+  grid-template-columns: 180px repeat(3, 1fr);
 
   color: @standart-white;
 
@@ -33,6 +33,8 @@
 .top-five__currency-info {
   position: relative;
   display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .top-five__currency-block {
