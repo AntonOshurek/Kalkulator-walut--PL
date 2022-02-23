@@ -1,0 +1,23 @@
+{
+  "name": "kalkulator-walut--pl",
+  "version": "1.0.0",
+  "description": "kalkulator walutowy dla Polski",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonOshurek/Kalkulator-walut--PL.git"
+  },
+  "keywords": [
+    "kalkulator",
+    "walut"
+  ],
+  "author": "Anton Ashurek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonOshurek/Kalkulator-walut--PL/issues"
+  },
+  "homepage": "https://github.com/AntonOshurek/Kalkulator-walut--PL#readme"
+}
