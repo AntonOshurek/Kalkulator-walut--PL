@@ -17,7 +17,8 @@ const topCurrency = () => {
     getOneCurrency(currencyName).then((data) => {
       showTopCurrency(data, item);
     }).catch((err) => {
-      console.error(`błąd pobierania danych - ${err}`);
+      showCurrencyError(err, item);
+      console.error(err);
     });
   });
 
@@ -27,6 +28,15 @@ const topCurrency = () => {
     item.querySelector('.top-five__price--buy').textContent = buy;
     item.querySelector('.top-five__currency-name').textContent = code;
   };
+
+  const showCurrencyError = (error, item) => {
+    item.querySelectorAll('.top-five__price').forEach((item) => {
+      item.classList.add('top-five__price--error');
+    })
+    item.querySelector('.top-five__price--sell').textContent = `błąd pobierania danych - error ${error}`;
+    item.querySelector('.top-five__price--buy').textContent = `błąd pobierania danych - error ${error}`;
+    item.querySelector('.top-five__currency-name').textContent = '---';
+  }
 
 };
 
