@@ -1,6 +1,8 @@
-import { test } from './block-1'
+import { topCurrency } from './modules/show-top-currency';
+
 
 window.addEventListener('DOMContentLoaded', () => {
-    test();
+  console.log('DOMContentLoaded')
+  topCurrency();
 });
 
