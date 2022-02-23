@@ -14,15 +14,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const GET_DATA_SOURCE = 'http://api.nbp.pl/api/exchangerates/tables/b/'; // http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/
 
-const getOneCurrency = code => fetch(`http://api.nbp.pl/api/exchangerates/rates/c/${code}/?format=json`, {
-  Accept: 'application/json'
-}).then(response => {
-  if (response.ok) {
-    return response.json();
-  }
+const getOneCurrency = function (code) {
+  let table = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'c';
+  return fetch(`http://api.nbp.pl/api/exchangerates/rates/${table}/${code}/?format=json`, {
+    Accept: 'application/json'
+  }).then(response => {
+    if (response.ok) {
+      return response.json();
+    }
 
-  throw new Error(`${response.status} ${response.statusText}`);
-});
+    throw new Error(`${response.status} ${response.statusText}`);
+  });
+};
 
 
 
@@ -46,10 +49,12 @@ const transformCurrencyData = obj => {
   const buy = obj.rates[0].bid;
   const sell = obj.rates[0].ask;
   const code = obj.code;
+  const name = obj.currency;
   return {
     buy,
     sell,
-    code
+    code,
+    name
   };
 };
 
@@ -62,17 +67,29 @@ const topCurrency = () => {
       showCurrencyError(err, item);
       console.error(err);
     });
+    (0,_api__WEBPACK_IMPORTED_MODULE_0__.getOneCurrency)(currencyName, 'a').then(data => {
+      showMidlCurrencyValue(data, item);
+    }).catch(err => {
+      showCurrencyError(err, item);
+      console.error(err);
+    });
   });
+
+  const showMidlCurrencyValue = (data, item) => {
+    item.querySelector('.top-five__price--midle').textContent = data.rates[0].mid;
+  };
 
   const showTopCurrency = (data, item) => {
     const {
       sell,
       buy,
-      code
+      code,
+      name
     } = transformCurrencyData(data);
     item.querySelector('.top-five__price--sell').textContent = sell;
     item.querySelector('.top-five__price--buy').textContent = buy;
     item.querySelector('.top-five__currency-name').textContent = code;
+    item.querySelector('.top-five__name').textContent = name;
   };
 
   const showCurrencyError = (error, item) => {
