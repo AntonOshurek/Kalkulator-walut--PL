@@ -150,9 +150,23 @@
             <input class="converter__input" type="number" placeholder="wprowadz dane">
           </label>
         </div>
+        <div class="converter__item">
+          <select class="converter__select" name="valute-second" id="valute-second">
+            <option class="converter__option" value="">--Please choose an option--</option>
+            <option class="converter__option" value="">Dollar</option>
+            <option class="converter__option" value="">Euro</option>
+          </select>
+          <label class="converter__label">
+            <input class="converter__input" type="number" placeholder="wprowadz dane">
+          </label>
+        </div>
       </form>
     </section>
   </main>
+
+  <template id="converter__option">
+    <option class="converter__option" value=""></option>
+  </template>
 
   <footer class="footer">
 
