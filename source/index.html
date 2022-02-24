@@ -17,7 +17,7 @@
   </header>
 
   <main class="main">
-    <section class="top-five">
+    <section class="top-five container">
       <h2 class="top-five__title">top walut</h2>
       <ul class="top-five__list">
         <li class="top-five__item" data-currency-name="EUR">
@@ -126,6 +126,31 @@
           </div>
         </li>
       </ul>
+    </section>
+    <section class="converter container">
+      <h2 class="converter__title">Konwerter walut</h2>
+      <form class="converter__module">
+        <div class="converter__item">
+          <select class="converter__select" name="valute-first" id="valute-first">
+            <option class="converter__option" value="">--Please choose an option--</option>
+            <option class="converter__option" value="">Dollar</option>
+            <option class="converter__option" value="">Euro</option>
+          </select>
+          <label class="converter__label">
+            <input class="converter__input" type="number" placeholder="wprowadz dane">
+          </label>
+        </div>
+        <div class="converter__item">
+          <select class="converter__select" name="valute-second" id="valute-second">
+            <option class="converter__option" value="">--Please choose an option--</option>
+            <option class="converter__option" value="">Dollar</option>
+            <option class="converter__option" value="">Euro</option>
+          </select>
+          <label class="converter__label">
+            <input class="converter__input" type="number" placeholder="wprowadz dane">
+          </label>
+        </div>
+      </form>
     </section>
   </main>
 
