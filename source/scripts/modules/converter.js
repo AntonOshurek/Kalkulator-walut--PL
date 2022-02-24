@@ -10,8 +10,11 @@ const transformCurrencyData = (obj) => {
 
 const converter = () => {
 
+  let allCurreny;
+
   getAllCurrency().then((data) => {
     showCurrencyItems(transformCurrencyData(data));
+    allCurreny = transformCurrencyData(data);
   }).catch((err) => {
     console.error(err);
   });
@@ -25,13 +28,10 @@ const converter = () => {
         const templateItem = optionTemplate.content.cloneNode(true);
         templateItem.querySelector('.converter__option').value = data[key].code;
         templateItem.querySelector('.converter__option').textContent = data[key].currency;
+        templateItem.querySelector('.converter__option').setAttribute('data-id', key);
 
         fragment.append(templateItem);
       }
-
-      //setting id attributes for input and select
-      item.querySelector('.converter__input').setAttribute('currency-id', `cur${i}`);
-      item.querySelector('.converter__select').setAttribute('currency-id', `cur${i}`);
 
       item.querySelector('.converter__select').append(fragment);
 
@@ -39,29 +39,53 @@ const converter = () => {
     })
   };
 
-  let inputValue = '';
+  let inputValue;
+  let selectValue;
+  let curentValuteObj;
+
+  // EUR/USD = EUR/PLN × PLN/USD
+
+  const currencyCalculation = (currencyName) => {
+
+    console.log(curentValuteObj)
+
+    for (let key in allCurreny) {
+
+      if(allCurreny[key].code === currencyName) {
+
+        console.log(allCurreny[key])
+
+        const result = (inputValue / curentValuteObj.ask) * (allCurreny[key].ask);
+
+        return result;
+      }
+    }
+  };
 
   const checkConvertingValue = (item) => {
-
     item.querySelector('.converter__input').addEventListener('input', (evt) => {
       inputValue = evt.target.value;
+      selectValue = item.querySelector('.converter__select').value;
+
+      for (let key in allCurreny) {
+        if(allCurreny[key].code === selectValue) {
+          curentValuteObj = allCurreny[key];
+        }
+      }
+
       setValue();
     });
 
     const setValue = () => {
-
       allConvertItems.forEach((convertItem) => {
         if(convertItem === item) {
           convertItem.querySelector('.converter__input').value = +inputValue;
         } else {
-          convertItem.querySelector('.converter__input').value = +inputValue * 2;
-          console.log(convertItem.querySelector('.converter__select').value);
-
+          convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
+          currencyCalculation(convertItem.querySelector('.converter__select').value);
         }
       });
-
     }
-
   }
 
 };
