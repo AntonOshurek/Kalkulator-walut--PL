@@ -10,13 +10,20 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getOneCurrency": function() { return /* binding */ getOneCurrency; }
+/* harmony export */   "getOneCurrency": function() { return /* binding */ getOneCurrency; },
+/* harmony export */   "getAllCurrency": function() { return /* binding */ getAllCurrency; }
 /* harmony export */ });
-const GET_DATA_SOURCE = 'http://api.nbp.pl/api/exchangerates/tables/b/'; // http://api.nbp.pl/api/exchangerates/rates/{table}/{code}/
+const GET_ONE_CURRENCY_SOURCE = 'http://api.nbp.pl/api/exchangerates/rates/';
+const GET_ALL_CURRENCY_SOURCE = 'http://api.nbp.pl/api/exchangerates/tables/';
+const BASI_TABLE_CODE = 'c'; // API souerce - http://api.nbp.pl/
+// {table} – typ tabeli (A, B, lub C)
+// {code} – trzyliterowy kod waluty (standard ISO 4217)
+// format JSON: nagłówek Accept: application/json lub parameter ?format=json
+// format XML: nagłówek Accept: application/xml lub parameter ?format=xml
 
 const getOneCurrency = function (code) {
-  let table = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'c';
-  return fetch(`http://api.nbp.pl/api/exchangerates/rates/${table}/${code}/?format=json`, {
+  let table = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : BASI_TABLE_CODE;
+  return fetch(`${GET_ONE_CURRENCY_SOURCE}${table}/${code}/?format=json`, {
     Accept: 'application/json'
   }).then(response => {
     if (response.ok) {
@@ -25,6 +32,113 @@ const getOneCurrency = function (code) {
 
     throw new Error(`${response.status} ${response.statusText}`);
   });
+};
+
+const getAllCurrency = function () {
+  let table = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASI_TABLE_CODE;
+  return fetch(`${GET_ALL_CURRENCY_SOURCE}${table}/?format=json`, {
+    Accept: 'application/json'
+  }).then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    throw new Error(`${response.status} ${response.statusText}`);
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./source/scripts/modules/converter.js":
+/*!*********************************************!*\
+  !*** ./source/scripts/modules/converter.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "converter": function() { return /* binding */ converter; }
+/* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api */ "./source/scripts/api.js");
+
+const allConvertItems = document.querySelectorAll('.converter__item');
+const optionTemplate = document.querySelector('#converter__option');
+
+const transformCurrencyData = obj => {
+  const curItems = obj[0].rates;
+  return { ...curItems
+  };
+};
+
+const converter = () => {
+  let allCurreny;
+  (0,_api__WEBPACK_IMPORTED_MODULE_0__.getAllCurrency)().then(data => {
+    showCurrencyItems(transformCurrencyData(data));
+    allCurreny = transformCurrencyData(data);
+  }).catch(err => {
+    console.error(err);
+  });
+
+  const showCurrencyItems = data => {
+    allConvertItems.forEach((item, i) => {
+      const fragment = new DocumentFragment();
+
+      for (let key in data) {
+        const templateItem = optionTemplate.content.cloneNode(true);
+        templateItem.querySelector('.converter__option').value = data[key].code;
+        templateItem.querySelector('.converter__option').textContent = data[key].currency;
+        templateItem.querySelector('.converter__option').setAttribute('data-id', key);
+        fragment.append(templateItem);
+      }
+
+      item.querySelector('.converter__select').append(fragment);
+      checkConvertingValue(item);
+    });
+  };
+
+  let inputValue;
+  let selectValue;
+  let curentValuteObj; // EUR/USD = EUR/PLN × PLN/USD
+
+  const currencyCalculation = currencyName => {
+    console.log(curentValuteObj);
+
+    for (let key in allCurreny) {
+      if (allCurreny[key].code === currencyName) {
+        console.log(allCurreny[key]);
+        const result = inputValue / curentValuteObj.ask * allCurreny[key].ask;
+        return result;
+      }
+    }
+  };
+
+  const checkConvertingValue = item => {
+    item.querySelector('.converter__input').addEventListener('input', evt => {
+      inputValue = evt.target.value;
+      selectValue = item.querySelector('.converter__select').value;
+
+      for (let key in allCurreny) {
+        if (allCurreny[key].code === selectValue) {
+          curentValuteObj = allCurreny[key];
+        }
+      }
+
+      setValue();
+    });
+
+    const setValue = () => {
+      allConvertItems.forEach(convertItem => {
+        if (convertItem === item) {
+          convertItem.querySelector('.converter__input').value = +inputValue;
+        } else {
+          convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
+          currencyCalculation(convertItem.querySelector('.converter__select').value);
+        }
+      });
+    };
+  };
 };
 
 
@@ -170,10 +284,12 @@ var __webpack_exports__ = {};
   \*********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_show_top_currency__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/show-top-currency */ "./source/scripts/modules/show-top-currency.js");
+/* harmony import */ var _modules_converter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/converter */ "./source/scripts/modules/converter.js");
+
 
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('DOMContentLoaded');
   (0,_modules_show_top_currency__WEBPACK_IMPORTED_MODULE_0__.topCurrency)();
+  (0,_modules_converter__WEBPACK_IMPORTED_MODULE_1__.converter)();
 });
 }();
 /******/ })()
