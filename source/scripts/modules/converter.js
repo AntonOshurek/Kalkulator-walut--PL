@@ -21,7 +21,6 @@ const converter = () => {
 
   const showCurrencyItems = (data) => {
     allConvertItems.forEach((item, i) => {
-
       const fragment = new DocumentFragment();
 
       for (let key in data) {
@@ -34,6 +33,7 @@ const converter = () => {
       }
 
       item.querySelector('.converter__select').append(fragment);
+      item.querySelector('.converter__select').value = data[i].code;
 
       checkConvertingValue(item)
     })
@@ -43,21 +43,11 @@ const converter = () => {
   let selectValue;
   let curentValuteObj;
 
-  // EUR/USD = EUR/PLN × PLN/USD
-
   const currencyCalculation = (currencyName) => {
-
-    console.log(curentValuteObj)
-
     for (let key in allCurreny) {
-
       if(allCurreny[key].code === currencyName) {
-
-        console.log(allCurreny[key])
-
         const result = (inputValue * curentValuteObj.ask) / (allCurreny[key].ask);
-
-        return result;
+        return result.toFixed(2);
       }
     }
   };
