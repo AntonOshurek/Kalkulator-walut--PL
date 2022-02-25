@@ -55,7 +55,7 @@ const converter = () => {
 
         console.log(allCurreny[key])
 
-        const result = (inputValue / curentValuteObj.ask) * (allCurreny[key].ask);
+        const result = (inputValue * curentValuteObj.ask) / (allCurreny[key].ask);
 
         return result;
       }
@@ -82,7 +82,6 @@ const converter = () => {
           convertItem.querySelector('.converter__input').value = +inputValue;
         } else {
           convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
-          currencyCalculation(convertItem.querySelector('.converter__select').value);
         }
       });
     }
