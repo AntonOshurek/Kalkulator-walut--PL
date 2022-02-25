@@ -2,9 +2,10 @@ import { getAllCurrency } from '../api';
 
 const allConvertItems = document.querySelectorAll('.converter__item');
 const optionTemplate = document.querySelector('#converter__option');
+const buySellRadio = document.querySelectorAll('.converter__buy-sell-radio');
 
 const transformCurrencyData = (obj) => {
-  const curItems = obj[0].rates
+  const curItems = obj[0].rates;
   return {...curItems};
 };
 
@@ -35,21 +36,41 @@ const converter = () => {
       item.querySelector('.converter__select').append(fragment);
       item.querySelector('.converter__select').value = data[i].code;
 
-      checkConvertingValue(item)
-    })
+      checkConvertingValue(item);
+    });
   };
 
   let inputValue;
   let selectValue;
   let curentValuteObj;
+  let buySell;
+
+  buySellRadio.forEach((radio) => {
+
+    if(radio.getAttribute('checked')) {
+      buySell = radio.value
+    }
+
+    radio.addEventListener('change', (evt) => {
+      buySell = evt.target.value;
+    })
+  });
 
   const currencyCalculation = (currencyName) => {
     for (let key in allCurreny) {
       if(allCurreny[key].code === currencyName) {
-        const result = (inputValue * curentValuteObj.ask) / (allCurreny[key].ask);
-        return result.toFixed(2);
-      }
-    }
+        let result;
+        switch(buySell) {
+          case 'buy':
+            result = (inputValue * curentValuteObj.ask) / (allCurreny[key].ask);
+            break;
+          case 'sell':
+            result = (inputValue * curentValuteObj.bid) / (allCurreny[key].bid);
+            break;
+        }
+        return result.toFixed(3);
+      };
+    };
   };
 
   const checkConvertingValue = (item) => {
@@ -60,8 +81,8 @@ const converter = () => {
       for (let key in allCurreny) {
         if(allCurreny[key].code === selectValue) {
           curentValuteObj = allCurreny[key];
-        }
-      }
+        };
+      };
 
       setValue();
     });
@@ -74,8 +95,8 @@ const converter = () => {
           convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
         }
       });
-    }
-  }
+    };
+  };
 
 };
 
