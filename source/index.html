@@ -127,34 +127,62 @@
         </li>
       </ul>
     </section>
-    <section class="converter container">
-      <h2 class="converter__title">Konwerter walut</h2>
-      <form class="converter__module">
-        <div class="converter__item">
-          <select class="converter__select" name="valute-first">
-            <option class="converter__option" value="">--Please choose an option--</option>
-          </select>
-          <label class="converter__label">
-            <input class="converter__input" type="number" placeholder="wprowadz dane">
-          </label>
-        </div>
-        <div class="converter__item">
-          <select class="converter__select" name="valute-second">
-            <option class="converter__option" value="">--Please choose an option--</option>
-          </select>
-          <label class="converter__label">
-            <input class="converter__input" type="number" placeholder="wprowadz dane">
-          </label>
-        </div>
-        <div class="converter__item">
-          <select class="converter__select" name="valute-second">
-            <option class="converter__option" value="">--Please choose an option--</option>
-          </select>
-          <label class="converter__label">
-            <input class="converter__input" type="number" placeholder="wprowadz dane">
-          </label>
-        </div>
-      </form>
+    <section class="converter">
+      <div class="converter__wrap container">
+        <h2 class="converter__title">Konwerter walut</h2>
+        <form class="converter__module">
+          <div class="converter__radio">
+            <label class="converter__radio-label">
+              kupić
+              <input class="converter__buy-sell-radio" type="radio"  value="buy" name="buy-sell">
+            </label>
+            <label class="converter__radio-label">
+              sprzedać
+              <input class="converter__buy-sell-radio" type="radio" checked value="sell" name="buy-sell">
+            </label>
+          </div>
+          <div class="converter__item">
+            <select class="converter__select" name="valute-first">
+
+            </select>
+            <label class="converter__label">
+              <input class="converter__input" type="number" step="10" placeholder="wprowadz dane">
+            </label>
+          </div>
+          <div class="converter__item">
+            <select class="converter__select" name="valute-second">
+
+            </select>
+            <label class="converter__label">
+              <input class="converter__input" type="number" step="10" placeholder="wprowadz dane">
+            </label>
+          </div>
+          <div class="converter__item">
+            <select class="converter__select" name="valute-second">
+
+            </select>
+            <label class="converter__label">
+              <input class="converter__input" type="number" step="10" placeholder="wprowadz dane">
+            </label>
+          </div>
+          <div class="converter__item">
+            <select class="converter__select" name="valute-second">
+
+            </select>
+            <label class="converter__label">
+              <input class="converter__input" type="number" step="10" placeholder="wprowadz dane">
+            </label>
+          </div>
+          <div class="converter__item">
+            <select class="converter__select" name="valute-second">
+
+            </select>
+            <label class="converter__label">
+              <input class="converter__input" type="number" step="10" placeholder="wprowadz dane">
+            </label>
+          </div>
+        </form>
+      </div>
     </section>
   </main>
 
