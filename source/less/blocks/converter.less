@@ -57,8 +57,56 @@
   cursor: pointer;
 }
 
-.converter__buy-sell-radio{
+.converter__radio-text {
+  font-size: 18px;
+  text-transform: capitalize;
+  color: @standart-black;
+  opacity: 0.7;
+}
+
+.converter__buy-sell-radio {
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.converter__custom-radio {
+  position: relative;
   cursor: pointer;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid @standart-border;
+  opacity: 0.8;
+}
+
+.converter__radio-label:hover .converter__custom-radio,
+.converter__radio-label:focus .converter__custom-radio {
+  opacity: 1;
+}
+
+.converter__buy-sell-radio:checked + .converter__custom-radio::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: @standart-border;
+  opacity: 1;
+}
+
+.converter__buy-sell-radio:checked + .converter__custom-radio {
+  opacity: 1;
+}
+
+.converter__buy-sell-radio:checked ~ .converter__radio-text {
+  opacity: 1;
 }
 
 .converter__item {
