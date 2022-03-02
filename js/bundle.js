@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const GET_ONE_CURRENCY_SOURCE = 'http://api.nbp.pl/api/exchangerates/rates/';
 const GET_ALL_CURRENCY_SOURCE = 'http://api.nbp.pl/api/exchangerates/tables/';
+const REQUEST_FORMAT = '?format=json';
 const BASIC_TABLE_CODE = 'c'; // API souerce - http://api.nbp.pl/
 // {table} – typ tabeli (A, B, lub C)
 // {code} – trzyliterowy kod waluty (standard ISO 4217)
@@ -23,7 +24,7 @@ const BASIC_TABLE_CODE = 'c'; // API souerce - http://api.nbp.pl/
 
 const getOneCurrency = function (code) {
   let table = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : BASIC_TABLE_CODE;
-  return fetch(`${GET_ONE_CURRENCY_SOURCE}${table}/${code}/?format=json`, {
+  return fetch(`${GET_ONE_CURRENCY_SOURCE}${table}/${code}/${REQUEST_FORMAT}`, {
     Accept: 'application/json'
   }).then(response => {
     if (response.ok) {
@@ -36,7 +37,7 @@ const getOneCurrency = function (code) {
 
 const getAllCurrency = function () {
   let table = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BASIC_TABLE_CODE;
-  return fetch(`${GET_ALL_CURRENCY_SOURCE}${table}/?format=json`, {
+  return fetch(`${GET_ALL_CURRENCY_SOURCE}${table}/${REQUEST_FORMAT}`, {
     Accept: 'application/json'
   }).then(response => {
     if (response.ok) {
@@ -90,14 +91,13 @@ const converter = () => {
         const templateItem = optionTemplate.content.cloneNode(true);
         templateItem.querySelector('.converter__option').value = data[key].code;
         templateItem.querySelector('.converter__option').textContent = data[key].currency;
-        templateItem.querySelector('.converter__option').setAttribute('data-id', key);
         fragment.append(templateItem);
       }
 
       item.querySelector('.converter__select').append(fragment);
       item.querySelector('.converter__select').value = data[i].code;
-      checkConvertingValue(item);
     });
+    checkConvertingValue();
   };
 
   let inputValue;
@@ -111,6 +111,10 @@ const converter = () => {
 
     radio.addEventListener('change', evt => {
       buySell = evt.target.value;
+
+      if (inputValue || selectValue) {
+        setcurrencyValue();
+      }
     });
   });
 
@@ -129,7 +133,7 @@ const converter = () => {
             break;
         }
 
-        return result.toFixed(3);
+        return result.toFixed(2);
       }
 
       ;
@@ -138,32 +142,34 @@ const converter = () => {
     ;
   };
 
-  const checkConvertingValue = item => {
-    item.querySelector('.converter__input').addEventListener('input', evt => {
-      inputValue = evt.target.value;
+  const setcurrencyValue = item => {
+    if (item) {
+      inputValue = item.querySelector('.converter__input').value;
       selectValue = item.querySelector('.converter__select').value;
+    }
 
-      for (let key in allCurreny) {
-        if (allCurreny[key].code === selectValue) {
-          curentValuteObj = allCurreny[key];
-        }
-
-        ;
+    for (let key in allCurreny) {
+      if (allCurreny[key].code === selectValue) {
+        curentValuteObj = allCurreny[key];
       }
 
       ;
-      setValue();
-    });
+    }
 
-    const setValue = () => {
-      allConvertItems.forEach(convertItem => {
-        if (convertItem === item) {
-          convertItem.querySelector('.converter__input').value = +inputValue;
-        } else {
-          convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
-        }
-      });
-    };
+    ;
+    allConvertItems.forEach(convertItem => {
+      if (convertItem === item) {
+        convertItem.querySelector('.converter__input').value = +inputValue;
+      } else {
+        convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
+      }
+    });
+  };
+
+  const checkConvertingValue = () => {
+    allConvertItems.forEach(item => {
+      item.addEventListener('input', () => setcurrencyValue(item));
+    });
   };
 };
 
