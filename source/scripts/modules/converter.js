@@ -28,16 +28,14 @@ const converter = () => {
         const templateItem = optionTemplate.content.cloneNode(true);
         templateItem.querySelector('.converter__option').value = data[key].code;
         templateItem.querySelector('.converter__option').textContent = data[key].currency;
-        templateItem.querySelector('.converter__option').setAttribute('data-id', key);
 
         fragment.append(templateItem);
       }
 
       item.querySelector('.converter__select').append(fragment);
       item.querySelector('.converter__select').value = data[i].code;
-
-      checkConvertingValue(item);
     });
+    checkConvertingValue();
   };
 
   let inputValue;
@@ -53,6 +51,10 @@ const converter = () => {
 
     radio.addEventListener('change', (evt) => {
       buySell = evt.target.value;
+
+      if(inputValue || selectValue) {
+        setcurrencyValue()
+      }
     })
   });
 
@@ -68,35 +70,38 @@ const converter = () => {
             result = (inputValue * curentValuteObj.bid) / (allCurreny[key].bid);
             break;
         }
-        return result.toFixed(3);
+        return result.toFixed(2);
       };
     };
   };
 
-  const checkConvertingValue = (item) => {
-    item.querySelector('.converter__input').addEventListener('input', (evt) => {
-      inputValue = evt.target.value;
+  const setcurrencyValue = (item) => {
+    if(item) {
+      inputValue = item.querySelector('.converter__input').value;
       selectValue = item.querySelector('.converter__select').value;
+    }
 
-      for (let key in allCurreny) {
-        if(allCurreny[key].code === selectValue) {
-          curentValuteObj = allCurreny[key];
-        };
+    for (let key in allCurreny) {
+      if(allCurreny[key].code === selectValue) {
+        curentValuteObj = allCurreny[key];
       };
+    };
 
-      setValue();
+    allConvertItems.forEach((convertItem) => {
+      if(convertItem === item) {
+        convertItem.querySelector('.converter__input').value = +inputValue;
+      } else {
+        convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
+      }
     });
 
-    const setValue = () => {
-      allConvertItems.forEach((convertItem) => {
-        if(convertItem === item) {
-          convertItem.querySelector('.converter__input').value = +inputValue;
-        } else {
-          convertItem.querySelector('.converter__input').value = currencyCalculation(convertItem.querySelector('.converter__select').value);
-        }
-      });
-    };
-  };
+  }
+
+  const checkConvertingValue = () => {
+    allConvertItems.forEach((item) => {
+      item.addEventListener('input', () => setcurrencyValue(item));
+    })
+  }
 
 };
 
