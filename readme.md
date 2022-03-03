@@ -3,7 +3,7 @@ Shows current exchange rates from the National **Bank of Poland**:bank:.
 
 ![Narodowy Bank Polski](https://www.nbp.pl/graph/logo/logo-nbp-w3.jpg)
 
-***[NBP Web API HERE :muscle:](http://api.nbp.pl/):bank:***
+***[NBP Web API HERE :muscle:](./images-for-readme/NBP.jpg):bank:***
 
 :euro: You can convert currency both by buying and selling currency :yen:.
 
