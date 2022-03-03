@@ -1,9 +1,9 @@
 # Poland Currency Converter :moneybag:
 Shows current exchange rates from the National **Bank of Poland**:bank:.
 
-![Narodowy Bank Polski](https://www.nbp.pl/graph/logo/logo-nbp-w3.jpg)
+![Narodowy Bank Polski](./images-for-readme/NBP.jpg)
 
-***[NBP Web API HERE :muscle:](./images-for-readme/NBP.jpg):bank:***
+***[NBP Web API HERE :muscle:](http://api.nbp.pl/):bank:***
 
 :euro: You can convert currency both by buying and selling currency :yen:.
 
