@@ -13,7 +13,7 @@ Shows current exchange rates from the National **Bank of Poland**:bank:.
 
 * **download repository**
 
-[download repository](./img__for-readme--1.png)
+![download repository](./img__for-readme--1.png)
 
 * **instal all dependencies**
 
