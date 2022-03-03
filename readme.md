@@ -1,4 +1,4 @@
-[![commits](https://img.shields.io/github/last-commit/AntonOshurek/Kalkulator-walut--PL?style=plastic)
+![commits](https://img.shields.io/github/last-commit/AntonOshurek/Kalkulator-walut--PL?style=plastic)
 
 # Poland Currency Converter :moneybag:
 Shows current exchange rates from the National **Bank of Poland**:bank:.
